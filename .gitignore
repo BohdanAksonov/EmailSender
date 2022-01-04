@@ -1,0 +1,8 @@
+/EmailSender/bin
+/EmailSender/.config
+/EmailSender/obj
+/EmailSender.Application/bin
+/EmailSender.Application/obj
+/EmailSender.Infrastructure/bin
+/EmailSender.Infrastructure/obj
+/.vs
