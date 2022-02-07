@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod()
                 .AllowCredentials()
                 .AllowAnyOrigin()
-                .WithOrigins("http://localhost:8080");
+                .WithOrigins("http://localhost:8080", "https://email-sender-fnt.herokuapp.com/");
     });
 });
 
