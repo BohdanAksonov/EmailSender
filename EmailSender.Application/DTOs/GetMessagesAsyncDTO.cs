@@ -1,8 +1,6 @@
-﻿using EmailSender.Application.DTOs;
-
-namespace EmailSender.BindingModels
+﻿namespace EmailSender.Application.DTOs
 {
-    public class SendEmailBindingModel
+    public class GetMessagesAsyncDTO
     {
         public IList<ReceiverDTO> Receivers { get; set; }
         public string EmailTemplate { get; set; }

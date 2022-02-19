@@ -1,5 +1,4 @@
 ﻿using EmailSender.Application.CQRS.Email;
-using EmailSender.Application.DTOs;
 using EmailSender.BindingModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,23 +23,13 @@ namespace EmailSender.Controllers
         [DisableRequestSizeLimit]
         public async Task<IActionResult> SendEmail([FromBody] SendEmailBindingModel sendEmailBindingModel)
         {
-            var receivers = new List<ReceiverDTO>();
-
-            foreach (var item in sendEmailBindingModel.Receivers)
-            {
-                var receiver = new ReceiverDTO
-                {
-                    EmailAddress = item.EmailAddress,
-                    Name = item.Name,
-                };
-                receivers.Add(receiver);
-            }
-
             var result = await _mediator.Send(new SendEmailCommand
             {
-                Receivers = receivers,
+                Receivers = sendEmailBindingModel.Receivers,
                 EmailTemplate = Encoding.UTF8.GetString(Convert.FromBase64String(sendEmailBindingModel?.EmailTemplate)),
                 Subject = sendEmailBindingModel.Subject,
+                Credential = sendEmailBindingModel.Credential,
+                From = sendEmailBindingModel.From,
             });
 
             return Ok();

@@ -6,3 +6,4 @@
 /EmailSender.Infrastructure/bin
 /EmailSender.Infrastructure/obj
 /.vs
+/EmailSender/appsettings.json

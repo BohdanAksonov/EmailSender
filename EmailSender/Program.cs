@@ -36,6 +36,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterMod
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new InfrastructureModules()));
 
 builder.Services.Configure<SmtpConfiguration>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<AesConfiguration>(builder.Configuration.GetSection("Aes"));
 
 var app = builder.Build();
 

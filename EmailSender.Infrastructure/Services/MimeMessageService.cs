@@ -16,20 +16,20 @@ namespace EmailSender.Infrastructure.Services
             _smtpConfiguration = smtpConfiguration.Value;
         }
 
-        public async Task<IList<MimeMessage>> GetMessagesAsync(IList<ReceiverDTO> receivers, string emailTemplate, string subject)
+        public async Task<IList<MimeMessage>> GetMessagesAsync(GetMessagesAsyncDTO param)
         {
             var result = new List<MimeMessage>();
 
-            foreach (var item in receivers)
+            foreach (var item in param.Receivers)
             {
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress(_smtpConfiguration.From, _smtpConfiguration.Username));
+                message.From.Add(new MailboxAddress(param.From, param.Credential.EmailAddress));
                 message.To.Add(new MailboxAddress(item.Name, item.EmailAddress));
-                message.Subject = subject;
+                message.Subject = param.Subject;
 
                 message.Body = new TextPart(TextFormat.Html)
                 {
-                    Text = emailTemplate.Replace("{FullName}", item.Name),
+                    Text = param.EmailTemplate.Replace("{FullName}", item.Name),
                 };
 
                 result.Add(message);

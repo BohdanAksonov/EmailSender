@@ -1,9 +1,9 @@
-﻿using EmailSender.Application.Interfaces;
+﻿using EmailSender.Application.DTOs;
+using EmailSender.Application.Interfaces;
 using EmailSender.Infrastructure.Configurations;
 using MailKit.Net.Smtp;
-using Microsoft.Extensions.Options;
-using MimeKit;
 using MailKit.Security;
+using Microsoft.Extensions.Options;
 
 namespace EmailSender.Infrastructure.Services
 {
@@ -16,29 +16,28 @@ namespace EmailSender.Infrastructure.Services
             _smtpConfiguration = smtpConfiguration.Value;
         }
 
-        public async Task Send(IList<MimeMessage> mimeMessages)
+        public async Task Send(SendDTO sendDTO)
         {
             using (var client = new SmtpClient())
             {
                 client.Timeout = (int)TimeSpan.FromMinutes(5).TotalMilliseconds;
                 await client.ConnectAsync(_smtpConfiguration.Host, _smtpConfiguration.Port, SecureSocketOptions.Auto);
 
-                await client.AuthenticateAsync(_smtpConfiguration.Username, _smtpConfiguration.Password);
+                await client.AuthenticateAsync(sendDTO.Credential.EmailAddress, sendDTO.Credential.Password);
 
                 if (client.IsAuthenticated && client.IsConnected)
                 {
-                    foreach (var item in mimeMessages)
+                    foreach (var item in sendDTO.MimeMessages)
                     {
                         try
                         {
                             await client.SendAsync(item);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-
                             continue;
                         }
-                        
+
                     }
                 }
 

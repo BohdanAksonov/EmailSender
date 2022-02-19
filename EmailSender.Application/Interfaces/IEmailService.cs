@@ -1,9 +1,9 @@
-﻿using MimeKit;
+﻿using EmailSender.Application.DTOs;
 
 namespace EmailSender.Application.Interfaces
 {
     public interface IEmailService
     {
-        Task Send(IList<MimeMessage> mimeMessages);
+        Task Send(SendDTO sendDTO);
     }
 }
