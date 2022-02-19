@@ -44,11 +44,11 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseCors("cors");
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors("cors");
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
