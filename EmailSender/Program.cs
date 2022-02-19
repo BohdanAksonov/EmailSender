@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod()
                 .AllowCredentials()
                 .AllowAnyOrigin()
-                .WithOrigins(new string[] { "http://localhost:8080", "https://email-sender-fnt.herokuapp.com" });
+                .WithOrigins(new string[] { "http://localhost:8080", "https://email-sender-fnt.herokuapp.com", "https://email-sender-fnt.herokuapp.com/" });
     });
 });
 
