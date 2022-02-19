@@ -9,6 +9,7 @@ namespace EmailSender.Infrastructure.IoC
         {
             builder.RegisterType<EmailService>().AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterType<MimeMessageService>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<AesService>().AsImplementedInterfaces().InstancePerDependency();
         }
     }
 }

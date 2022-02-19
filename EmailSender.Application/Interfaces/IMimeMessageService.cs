@@ -5,6 +5,6 @@ namespace EmailSender.Application.Interfaces
 {
     public interface IMimeMessageService
     {
-        Task<IList<MimeMessage>> GetMessagesAsync(IList<ReceiverDTO> receivers, string emailTemplate, string subject);
+        Task<IList<MimeMessage>> GetMessagesAsync(GetMessagesAsyncDTO param);
     }
 }
