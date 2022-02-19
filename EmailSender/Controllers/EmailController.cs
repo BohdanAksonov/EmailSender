@@ -34,5 +34,11 @@ namespace EmailSender.Controllers
 
             return Ok();
         }
+
+        [HttpGet("test")]
+        public IActionResult Get()
+        {
+            return Ok("Test");
+        }
     }
 }

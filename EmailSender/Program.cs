@@ -4,31 +4,23 @@ using EmailSender.Application.IoC;
 using EmailSender.Infrastructure.Configurations;
 using EmailSender.Infrastructure.IoC;
 using EmailSender.IoC;
-using Microsoft.AspNetCore.HttpOverrides;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("cors", builder =>
     {
-        builder.AllowAnyHeader()
+        builder.WithOrigins(new string[] { "http://localhost:8080", "https://email-sender-fnt.herokuapp.com" })
+                .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowCredentials()
-                .AllowAnyOrigin()
-                .WithOrigins(new string[] { "http://localhost:8080", "https://email-sender-fnt.herokuapp.com", "https://email-sender-fnt.herokuapp.com/" });
+                .AllowCredentials();
     });
 });
 
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
-});
+builder.Services.AddControllers();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacModules()));
@@ -49,11 +41,6 @@ app.UseCors("cors");
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
 
 app.UseAuthentication();
 
